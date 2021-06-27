@@ -3,7 +3,7 @@ export default class RouteNotFoundError extends CustomError{
   status=404
   reason="Route not found"
   constructor(){
-    super("Ro")
+    super("Route not found")
     Object.setPrototypeOf(this,RouteNotFoundError.prototype)
 
   }
