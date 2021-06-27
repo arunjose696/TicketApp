@@ -8,20 +8,10 @@ export default  function errorhandler(
   req:Request,
   res:Response,
   next:NextFunction){
-    if( err  instanceof CustomError){
-      
-
-      
-       
-      return res.status(err.status).send(
-        {        
-          errors:err.serialiseError()
-        }
-        )
-    }
-    
-    
-     res.status(400).send({errors:[{message:"An unknown error occured"}]})
+    if( err  instanceof CustomError){ 
+       return res.status(err.status).send({ errors:err.serialiseError()})
+    } 
+    res.status(400).send({errors:[{message:"An unknown error occured"}]})
 
        
 }
