@@ -1,10 +1,18 @@
 
-export default class DatabaseConnectionError extends Error{
+import CustomError from "./custom-error"
+
+export default class DatabaseConnectionError extends CustomError{
   reason="Databsase connection failed"
+  status=502
   constructor(){
-    super()
+    super("Databsase connection failed")
     Object.setPrototypeOf(this,DatabaseConnectionError.prototype)
 
+  }
+  serialiseError(){
+
+    return [{message:this.reason}]
+    
   }
 
 }
