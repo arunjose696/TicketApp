@@ -4,8 +4,8 @@ import "express-async-errors"
 import {CurrentUserRouter} from "./routes/current-user"
 import {SignInRouter} from "./routes/signin"
 import {SignOutRouter} from "./routes/signout"
-
 import {SignUpRouter} from "./routes/signup"
+import cookieSession from "cookie-session"
 
 import  mongoose  from "mongoose";
 
@@ -14,7 +14,12 @@ import RouteNotFoundError from "./errors/route-not-found";
 
 import errorhandler from  "./middleware/error-handler"
 const app=express()
+app.set('trust proxy', true);
 app.use(express.json())
+app.use(cookieSession({
+  secure: true,
+  signed:false 
+}))
 app.use(CurrentUserRouter)
 app.use(SignInRouter)
 app.use(SignOutRouter)

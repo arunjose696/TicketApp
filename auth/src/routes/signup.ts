@@ -5,6 +5,7 @@ import DatabaseConnectionError from "../errors/database-connection-error"
 import { User } from "../models/user"
 import { BadRequestError } from "../errors/bad-request-error"
 import {Password} from "../services/password"
+import jwt  from  'jsonwebtoken'
 
 const router=express.Router()
 router.post(
@@ -33,10 +34,20 @@ router.post(
       throw new BadRequestError("Email already exists")
     }
     
+    
 
     const user = User.build({email,password})
     await user.save()
     console.log(user)
+    var token = jwt.sign(
+      { id:user.id,
+      email: user.email }, 'asdf'
+      )
+    
+    req.session={
+      "cookie" : token
+    }
+
     return res.status(201).send(user)
 
 
