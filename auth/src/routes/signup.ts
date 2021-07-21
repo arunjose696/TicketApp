@@ -41,7 +41,7 @@ router.post(
     console.log(user)
     var token = jwt.sign(
       { id:user.id,
-      email: user.email }, 'asdf'
+      email: user.email }, process.env.JWT_KEY as string
       )
     
     req.session={

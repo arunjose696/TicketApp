@@ -40,6 +40,9 @@ app.use(errorhandler)
 
 
 const start=async()=>{
+  if(!process.env.JWT_KEY){
+   throw new Error("JWT secret not loaded")
+  }
   try {
     await mongoose.connect('mongodb://auth-mongo-service/auth', {useNewUrlParser: true, useUnifiedTopology: true});
     console.log("connected to mongo")
