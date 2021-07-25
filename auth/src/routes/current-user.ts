@@ -1,7 +1,12 @@
 import express from "express"
 const router=express.Router()
-router.get("/currentuser",(req,res)=>{
-  res.send("hi there")
+import jwt from "jsonwebtoken"
+import checkCurrentUser from  "../middleware/checkCurrentUser"
+import checkAuthenticated  from  "../middleware/checkAuthenticated"
+router.get("/api/users/currentuser",checkCurrentUser,checkAuthenticated,(req,res)=>{
+  
+  
+  return res.send({currentUser:req.currentUser || null})
 
 })
 

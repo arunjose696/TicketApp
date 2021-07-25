@@ -1,10 +1,10 @@
 import express,{Request,Response} from "express"
-import {body,validationResult} from "express-validator"
-import RequestValidationError from "../errors/request-validation-error"
+import {body} from "express-validator"
 import DatabaseConnectionError from "../errors/database-connection-error"
 import { User } from "../models/user"
 import { BadRequestError } from "../errors/bad-request-error"
 import {Password} from "../services/password"
+import { validateRequest } from "../middleware/validateRequest"
 import jwt  from  'jsonwebtoken'
 
 const router=express.Router()
@@ -20,32 +20,22 @@ router.post(
 
   async (req:Request,res:Response)=>{
     
-    const errors=validationResult(req)    
-    if (!errors.isEmpty()){
-      throw new RequestValidationError(errors.array());      
-    }
-    console.log("validation check pass")   
-
-
-
+    validateRequest(req)  
     const {email,password}=req.body
     const existingUser= await User.findOne({email})
     if(existingUser){
       throw new BadRequestError("Email already exists")
     }
-    
-    
-
     const user = User.build({email,password})
     await user.save()
-    console.log(user)
+    
     var token = jwt.sign(
       { id:user.id,
       email: user.email }, process.env.JWT_KEY as string
       )
     
     req.session={
-      "cookie" : token
+      JWT : token
     }
 
     return res.status(201).send(user)
