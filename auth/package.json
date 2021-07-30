@@ -5,7 +5,20 @@
   "main": "index.js",
   "scripts": {
     "start": "ts-node-dev --poll src/index.ts",
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "jest --watchAll --verbose  --no-cache"
+  },
+  "jest": {
+    "preset": "ts-jest",
+    "setupFilesAfterEnv": [
+      "./src/test/setup.ts"
+    ],
+    "testEnvironment": "node"
+  },
+  "config": {
+    "mongodbMemoryServer": {
+      
+      "arch": "x64"
+    }
   },
   "keywords": [],
   "author": "",
@@ -20,7 +33,16 @@
     "express-validator": "^6.11.1",
     "jsonwebtoken": "^8.5.1",
     "mongoose": "^5.12.15",
-    "ts-node-dev": "^1.1.6",
-    "typescript": "^4.3.2"
+    "ts-node-dev": "^1.1.6"
+  },
+  "devDependencies": {
+    "@types/jest": "^26.0.24",
+    "@types/node": "^16.4.3",
+    "@types/supertest": "^2.0.11",
+    "jest": "^27.0.6",
+    "mongodb-memory-server": "^6.5.1",
+    "supertest": "^6.1.4",
+    "ts-jest": "^27.0.4",
+    "typescript": "^4.3.5"
   }
 }

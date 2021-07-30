@@ -11,7 +11,7 @@ export default  function errorhandler(
     if( err  instanceof CustomError){ 
        return res.status(err.status).send({ errors:err.serialiseError()})
     } 
-    res.status(400).send({errors:[{message:"An unknown error occured"}]})
+    res.status(500).send({errors:[{message:"An unknown error occured"}]})
 
        
 }
