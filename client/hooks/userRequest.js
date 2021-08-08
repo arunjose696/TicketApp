@@ -1,6 +1,7 @@
 import axios from 'axios';
 import { useState } from 'react';
-const userRequest = ({ method, url, body }) => {
+
+const userRequest = ({ method, url, body, onSuccess }) => {
   const [errs, setErrs] = useState(null);
   const [errEmail, setErrEmail] = useState('');
   const [errPassword, setErrPassword] = useState('');
@@ -10,8 +11,9 @@ const userRequest = ({ method, url, body }) => {
       setErrEmail('');
       setErrPassword('');
       const response = await axios[method](url, body);
-      console.log(response);
+      onSuccess();
     } catch (error) {
+      console.log(error);
       error.response.data.errors.map((err) => {
         if (err.field == 'email') setErrEmail(err.message);
         if (err.field == 'password') setErrPassword(err.message);

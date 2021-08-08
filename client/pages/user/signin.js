@@ -11,7 +11,7 @@ const signUpPage = () => {
 
   const { errs, makeRequest, errEmail, errPassword } = userRequest({
     method: 'post',
-    url: '/api/users/signup',
+    url: '/api/users/signin',
     body: { email, password },
     onSuccess,
   });
@@ -58,7 +58,7 @@ const signUpPage = () => {
         {errs}
         <div className="col-12">
           <button type="submit" className="btn btn-primary">
-            Sign Up
+            Sign in
           </button>
         </div>
       </div>
